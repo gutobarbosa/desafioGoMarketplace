@@ -32,11 +32,10 @@ const CartProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function loadProducts(): Promise<void> {
       const items = await AsyncStorage.getItem('@GoMarketplace:products');
-
+      console.log(items);
       if (items) {
         setProducts([...JSON.parse(items)]);
       }
-      // console.log(products);
     }
 
     loadProducts();
@@ -56,7 +55,7 @@ const CartProvider: React.FC = ({ children }) => {
         setProducts([...product, { ...product, quantity: 1 }]);
         // setProducts([...product]);
       }
-      // console.log(products);
+
       await AsyncStorage.setItem(
         '@GoMarketplace:products',
         JSON.stringify(products),

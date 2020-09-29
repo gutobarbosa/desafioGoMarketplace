@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 
 import AsyncStorage from '@react-native-community/async-storage';
-import api from 'src/services/api';
 
 interface Product {
   id: string;
@@ -31,39 +30,15 @@ const CartProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
-      const items = await AsyncStorage.getItem('@GoMarketplace:products');
-
-      if (items) {
-        setProducts([...JSON.parse(items)]);
-      }
-      // console.log(products);
+      // TODO LOAD ITEMS FROM ASYNC STORAGE
     }
 
     loadProducts();
   }, []);
 
-  const addToCart = useCallback(
-    async product => {
-      const productsExists = products.find(p => p.id === product.id);
-
-      if (productsExists) {
-        setProducts(
-          products.map(p =>
-            p.id === product.id ? { ...product, quantity: p.quantity + 1 } : p,
-          ),
-        );
-      } else {
-        setProducts([...product, { ...product, quantity: 1 }]);
-        // setProducts([...product]);
-      }
-      // console.log(products);
-      await AsyncStorage.setItem(
-        '@GoMarketplace:products',
-        JSON.stringify(products),
-      );
-    },
-    [products],
-  );
+  const addToCart = useCallback(async product => {
+    // TODO ADD A NEW ITEM TO THE CART
+  }, []);
 
   const increment = useCallback(async id => {
     // TODO INCREMENTS A PRODUCT QUANTITY IN THE CART
