@@ -83,9 +83,8 @@ const CartProvider: React.FC = ({ children }) => {
     [products],
   );
 
-  const decrement = useCallback(
-    async id => {
-      const productsExists = products.find(p => p.id === id);
+  const decrement = useCallback(async id => {
+    const productsExists = products.find(p => p.id === id);
 
       if (productsExists) {
         setProducts(

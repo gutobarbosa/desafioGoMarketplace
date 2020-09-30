@@ -36,14 +36,14 @@ interface Product {
 }
 
 const Cart: React.FC = () => {
-  const { increment, decrement, products } = useCart();
+  const { increment, decrement, products, clearAppData } = useCart();
 
   function handleIncrement(id: string): void {
-    increment(id);
+    clearAppData();
   }
 
   function handleDecrement(id: string): void {
-    decrement(id);
+    // TODO
   }
 
   const cartTotal = useMemo(() => {

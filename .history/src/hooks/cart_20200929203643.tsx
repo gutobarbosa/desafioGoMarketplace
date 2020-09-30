@@ -79,28 +79,22 @@ const CartProvider: React.FC = ({ children }) => {
         '@GoMarketplace:products',
         JSON.stringify(products),
       );
+      console.log(productsExists);
+      console.log(id);
     },
     [products],
   );
 
-  const decrement = useCallback(
-    async id => {
-      const productsExists = products.find(p => p.id === id);
-
-      if (productsExists) {
-        setProducts(
-          products.map(p =>
-            p.id === id ? { ...p, quantity: p.quantity - 1 } : p,
-          ),
-        );
+  const decrement = useCallback(async id => {
+    const clearAppData = async function() {
+      try {
+          const keys = await AsyncStorage.getAllKeys();
+          await AsyncStorage.multiRemove(keys);
+      } catch (error) {
+          console.error('Error clearing app data.');
       }
-      await AsyncStorage.setItem(
-        '@GoMarketplace:products',
-        JSON.stringify(products),
-      );
-    },
-    [products],
-  );
+  }
+  }, []);
 
   const value = React.useMemo(
     () => ({ addToCart, increment, decrement, products }),
