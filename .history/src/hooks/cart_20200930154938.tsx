@@ -86,21 +86,9 @@ const CartProvider: React.FC = ({ children }) => {
   const decrement = useCallback(
     async id => {
       const productsExists = products.find(p => p.id === id);
-
-      let indiceProducts: number;
-      let quantity: number;
-
-      // eslint-disable-next-line prefer-const
-      quantity = productsExists?.quantity;
-
-      // eslint-disable-next-line prefer-const
-      indiceProducts = productsExists?.id;
-
-      if (quantity <= 1) {
-        const result = products.filter(
-          product => product.id !== indiceProducts,
-        );
-        setProducts(result);
+      console.log(productsExists?.quantity);
+      if (productsExists?.quantity <= 0) {
+        await AsyncStorage.removeItem('@GoMarketplace:products');
       } else if (productsExists) {
         setProducts(
           products.map(p =>

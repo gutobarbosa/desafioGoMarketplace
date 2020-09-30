@@ -87,21 +87,7 @@ const CartProvider: React.FC = ({ children }) => {
     async id => {
       const productsExists = products.find(p => p.id === id);
 
-      let indiceProducts: number;
-      let quantity: number;
-
-      // eslint-disable-next-line prefer-const
-      quantity = productsExists?.quantity;
-
-      // eslint-disable-next-line prefer-const
-      indiceProducts = productsExists?.id;
-
-      if (quantity <= 1) {
-        const result = products.filter(
-          product => product.id !== indiceProducts,
-        );
-        setProducts(result);
-      } else if (productsExists) {
+      if (productsExists) {
         setProducts(
           products.map(p =>
             p.id === id ? { ...p, quantity: p.quantity - 1 } : p,
@@ -116,9 +102,17 @@ const CartProvider: React.FC = ({ children }) => {
     [products],
   );
 
+  const deletedItem = useCallback(
+    async id => {
+      const productsExists = products.find(p => p.id === id);
+
+
+    [products],
+  );
+
   const value = React.useMemo(
-    () => ({ addToCart, increment, decrement, products }),
-    [products, addToCart, increment, decrement],
+    () => ({ addToCart, increment, decrement,deletedItem, products }),
+    [products, addToCart, increment,deletedItem, decrement],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

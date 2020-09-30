@@ -86,22 +86,29 @@ const CartProvider: React.FC = ({ children }) => {
   const decrement = useCallback(
     async id => {
       const productsExists = products.find(p => p.id === id);
-
+      console.log(productsExists?.id);
       let indiceProducts: number;
-      let quantity: number;
+      let indice: number;
+      const quantity = productsExists?.quantity
 
-      // eslint-disable-next-line prefer-const
-      quantity = productsExists?.quantity;
-
-      // eslint-disable-next-line prefer-const
       indiceProducts = productsExists?.id;
+      // indice = products.indexOf(indiceProducts);
+      console.log(indice);
+      console.log("atencao aqui:" + quantity);
 
-      if (quantity <= 1) {
-        const result = products.filter(
-          product => product.id !== indiceProducts,
-        );
+      indice = products.findIndex(found => found.id == indiceProducts);
+
+      console.log('esse é o indice:' + indice);
+
+
+      if(productsExists?.quantity <= 0) {
+        const result = products.filter(product => product.id !== indiceProducts);
         setProducts(result);
-      } else if (productsExists) {
+        console.log(products);
+      }
+     // console.log(result);
+
+      if (productsExists) {
         setProducts(
           products.map(p =>
             p.id === id ? { ...p, quantity: p.quantity - 1 } : p,
